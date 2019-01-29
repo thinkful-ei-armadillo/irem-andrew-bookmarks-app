@@ -1,16 +1,8 @@
 'use strict';
 const store = (function(){
     
-  const addBookmark = function(itemName){
-    this.items.push(
-      {
-        id: cuid(), 
-        name: itemName, 
-        url: '', 
-        description: '', 
-        extended: false,
-        adding: false
-      });
+  const addBookmark = function(item){
+    this.items.push(item);
   };
     
   const deleteBookmark = function(id){
