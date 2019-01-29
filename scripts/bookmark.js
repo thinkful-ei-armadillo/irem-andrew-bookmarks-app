@@ -1,3 +1,4 @@
+/* global api, $, store */
 'use strict';
 
 $.fn.extend({
@@ -21,11 +22,20 @@ function handleAddBookMarkButton(){
 
 function handleNewBookmarkSubmit(){
   $('form').on('submit', function(e){
-    e.preventDefault();
-    console.log('handleNewBookmarkSubmit ran');
+    e.preventDefault(val)
+    const title = $(.b)
+    console.log($(e.target).val());
+    // console.log('handleNewBookmarkSubmit ran');
     const userInput = $(e.target).serializeJson();
-    console.log(userInput);
+    // console.log(userInput);
+    api.createBookmark(userInput);
+    store.addBookMark();
+    // render();
   });
+}
+
+function render(){
+
 }
 
 function handleMinimumRatingDropdown(){
