@@ -1,12 +1,30 @@
 'use strict';
 
+$.fn.extend({
+  serializeJson: function() {
+    const formData = new FormData(this[0]);
+    const o = {};
+    formData.forEach((val, name) => o[name] = val);
+    return JSON.stringify(o);
+  }
+});
+
 function handleAddBookMarkButton(){
   $('.js-add-bookmark').on('click', function(e){
     e.preventDefault();
     console.log('handleAddBookMarkButton ran');
-    // api.addBookmark();
+    // api.createBookmark();
     // store.addBookMark = true;
     // render();
+  });
+}
+
+function handleNewBookmarkSubmit(){
+  $('form').on('submit', function(e){
+    e.preventDefault();
+    console.log('handleNewBookmarkSubmit ran');
+    const userInput = $(e.target).serializeJson();
+    console.log(userInput);
   });
 }
 
@@ -26,5 +44,6 @@ function render(){
 function watchForm() {
   handleAddBookMarkButton();
   handleMinimumRatingDropdown();
+  handleNewBookmarkSubmit();
 }
 $(watchForm);
