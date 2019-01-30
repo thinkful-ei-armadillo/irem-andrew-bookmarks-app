@@ -10,6 +10,8 @@ $.fn.extend({
   }
 });
 
+const bookmarkList = (function() {
+
 function render(){
   let items = [...store.items];
   // Iterate over each items element and check to see if extended is true
@@ -17,6 +19,10 @@ function render(){
   // If false, generateBookmarkHTML for that element
   // All while keeping the original order of the array
   let newBookmarkString = '';
+  if(store.adding) {
+    newBookmarkString += generateAddBookmarkFormHTML();
+  }
+
   for (let i = 0; i < items.length; i++){
     if (items[i].extended){
       newBookmarkString += generateExtendedBookmarkHTML(items[i]);
@@ -29,14 +35,44 @@ function render(){
     $('.js-bookmark-list').html(newBookmarkString);
 }
 
+function handleNewBookmarkClose() {
+  $('.js-bookmark-list').on('click', '.js-close-add-bookmark-button', function(e){
+    e.preventDefault();
+    console.log('Close button working');
+    store.adding = false;
+    render();
+  });
+}
+
 function handleAddBookMarkButton(){
   $('.js-add-bookmark').on('click', function(e){
     e.preventDefault();
     console.log('handleAddBookMarkButton ran');
-    // api.createBookmark();
-    // store.addBookMark = true;
-    // render();
+    store.adding = true;
+    render();
   });
+}
+
+function generateAddBookmarkFormHTML(){
+  return `
+  <form>
+    <label for="item-title">
+      <input type="text" name="title" id="item-title" placeholder="Title">
+    </label>
+    <label for="item-url">
+      <input type="text" name="url" id="item-url" placeholder="URL">
+    </label>
+    <label for="item-rating">
+      <input type="text" name="rating" id="item-rating" placeholder="Rating">
+    </label>
+    <label for="item-description">
+      <input type="text" name="description" id="item-description" placeholder="Description">
+    </label>
+    <br>
+     <button type="submit" class="js-add-bookmark-button">Submit</button>
+     <button type="button" class="js-close-add-bookmark-button">Close</button>
+  </form>
+  `;
 }
 
 function handleNewBookmarkSubmit(){
@@ -97,10 +133,10 @@ function generateExtendedBookmarkHTML(item){
   `;
 }
 
-function generateBookmarksHTMLString(bookmarks){
-  const items = bookmarks.map(item => generateBookmarkHTML(item));
-  return items.join('');
-}
+// function generateBookmarksHTMLString(bookmarks){
+//   const items = bookmarks.map(item => generateBookmarkHTML(item));
+//   return items.join('');
+// }
 
 function handleMinimumRatingDropdown(){
   $('.js-minimum-rating').change(function(e){
@@ -114,5 +150,11 @@ function watchForm() {
   handleMinimumRatingDropdown();
   handleNewBookmarkSubmit();
   handleExtendViewClick();
+  handleNewBookmarkClose();
 }
-$(watchForm);
+  return {
+    watchForm,
+    render
+  };
+
+}());

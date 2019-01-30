@@ -22,6 +22,7 @@ const store = (function(){
     
   return {
     items: [],
+    adding: false,
     addBookmark,
     deleteBookmark,
     findAndUpdate,
