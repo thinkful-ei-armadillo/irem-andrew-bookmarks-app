@@ -56,9 +56,9 @@ const bookmarkList = (function() {
   function handleRemoveBookmarkButton(){
     $('.js-bookmark-list').on('click', '.js-remove-bookmark', function(e){
       e.preventDefault();
-      // console.log('handleRemoveBookmarkButton works');
+      console.log('handleRemoveBookmarkButton works');
       let id = findIdFromElement(e.target);
-      // console.log(findIdFromElement(e.target));
+      console.log(findIdFromElement(e.target));
       api.deleteBookmark(id)
         .then(()=> {
           store.deleteBookmark(id);
@@ -81,7 +81,7 @@ const bookmarkList = (function() {
       <input type="text" name="rating" id="item-rating" placeholder="Rating">
     </label>
     <label for="item-description">
-      <input type="text" name="description" id="item-description" placeholder="Description">
+      <input type="text" name="desc" id="item-description" placeholder="Description">
     </label>
     <br>
      <button type="submit" class="js-add-bookmark-button">Submit</button>
@@ -96,9 +96,11 @@ const bookmarkList = (function() {
       const userInput = $(e.target).getFormInput();
       addIdAndExtendedFeature(userInput); 
       const userJSONInput = JSON.stringify(userInput);
+      console.log(userInput);
       api.createBookmark(userJSONInput)
-        .then(() => {
-          store.addBookmark(userInput);
+        .then((data) => {
+          console.log(data);
+          store.addBookmark(data);
           render();
         });
     });
@@ -142,7 +144,7 @@ const bookmarkList = (function() {
       <p>${item.title}</p>
       <p>${item.rating}</p>
       <p>${item.url}</p>
-      <p>${item.description}</p>
+      <p>${item.desc}</p>
         <button type="submit" class="js-remove-bookmark">Remove</button>
     </li>
   `;
