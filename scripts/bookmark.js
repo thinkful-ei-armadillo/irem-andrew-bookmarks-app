@@ -13,23 +13,38 @@ $.fn.extend({
 const bookmarkList = (function() {
 
   function render(){
-    let items = [...store.items];
+    // Take away if statement?
+    let items;
+    const filteredItems = filterBookmarkList();
+    if (filteredItems){
+      items = filteredItems;
+    }
+    else{
+      items = [...store.items];
+    }
     // Iterate over each items element and check to see if extended is true
     // If it is true, generateExtendedHTML for that element 
     // If false, generateBookmarkHTML for that element
     // All while keeping the original order of the array
     let newBookmarkString = '';
+    // if(store.filtering){
+    //   // Do something
+    //   const filteredItems = filterBookmarkList(store.minimumRating);
+    //   console.log(filteredItems);
+    // }
+    
     if(store.adding) {
       newBookmarkString += generateAddBookmarkFormHTML();
     }
 
-    if(store.minimumRating !== 1) {
-      for (let i = 0; i < store.filteredItems.length; i++){
-        newBookmarkString += generateBookmarkHTML(store.filteredItems[i]);
-      }
+    // if(store.minimumRating > 1) {
+    //   for (let i = 0; i < store.filteredItems.length; i++){
+    //     newBookmarkString += generateBookmarkHTML(store.filteredItems[i]);
+    //   }
       // console.log(newBookmarkString);
-    }
-
+    // }
+    
+    // else {
     for (let i = 0; i < items.length; i++){
       if (items[i].extended){
         newBookmarkString += generateExtendedBookmarkHTML(items[i]);
@@ -38,6 +53,7 @@ const bookmarkList = (function() {
         newBookmarkString += generateBookmarkHTML(items[i]);
       }
     }
+  // }
     // const bookmarkItemString = generateBookmarksHTMLString(items);
     $('.js-bookmark-list').html(newBookmarkString);
   }
@@ -71,8 +87,30 @@ const bookmarkList = (function() {
           store.deleteBookmark(id);
           console.log(store);
           render();
+        })
+        .catch(err => {
+          // alert(err.message);
+          handleErrorMessage(err.message);
+          store.error = true;
         });
+        
     });
+  }
+
+  function handleCloseErrorMessage(){
+    $('.error-container').on('click', '#cancel-error', function(e){
+      console.log('Error close working');
+      $('.error-container').empty();
+    });
+  }
+
+  function handleErrorMessage(error){
+    $('.error-container').html(`
+    <section class="error-content">
+      <button id="cancel-error">Close</button>
+      <p>${error}</p>
+    </section>
+  `);
   }
 
   function generateAddBookmarkFormHTML(){
@@ -109,6 +147,11 @@ const bookmarkList = (function() {
           console.log(data);
           store.addBookmark(data);
           render();
+        })
+        .catch(err => {
+          // alert(err.message);
+          handleErrorMessage(err.message);
+          store.error = true;
         });
     });
   }
@@ -150,7 +193,7 @@ const bookmarkList = (function() {
     <li data-id="${item.id}" class="js-bookmark-view">
       <p>${item.title}</p>
       <p>${item.rating}</p>
-      <p>${item.url}</p>
+      <a href="${item.url}">Visit site</a>
       <p>${item.desc}</p>
         <button type="submit" class="js-remove-bookmark">Remove</button>
     </li>
@@ -167,14 +210,17 @@ const bookmarkList = (function() {
       e.preventDefault(); 
       console.log('handleMinimumRatingDropdown ran');
       let minimumRating = $(e.currentTarget).val();
-      filterBookmarkList(minimumRating);
+      store.filtering = true;
+      // filterBookmarkList(minimumRating);
       store.minimumRating = minimumRating;
+      // const filteredItems = filterBookmarkList(minimumRating);
       render();
     });
   }
 
-  function filterBookmarkList(minimumRating){
-    store.filteredItems = store.items.filter(item => item.rating >= minimumRating);
+  function filterBookmarkList(){
+    let filteredItems = store.items.filter(item => item.rating >= store.minimumRating);
+    return filteredItems;
   }
 
   function watchForm() {
@@ -184,6 +230,7 @@ const bookmarkList = (function() {
     handleExtendViewClick();
     handleNewBookmarkClose();
     handleRemoveBookmarkButton();
+    handleCloseErrorMessage();
   }
   return {
     watchForm,

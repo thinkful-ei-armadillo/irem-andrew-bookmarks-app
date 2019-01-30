@@ -7,6 +7,7 @@ const store = (function(){
     
   const deleteBookmark = function(id){
     this.items = this.items.filter(item => item.id !== id);
+    // this.filteredItems = this.items.filter(item => item.id !== id);
   };
 
   const findAndUpdate = function(id, newData) {
@@ -14,7 +15,6 @@ const store = (function(){
     Object.assign(item, newData);
     return item;
   };
-
 
   const findById = function(id) {
     return this.items.find(item => item.id === id);
@@ -24,11 +24,12 @@ const store = (function(){
     items: [],
     adding: false,
     minimumRating: 1,
-    filteredItems: [],
+    filtering: false,
     addBookmark,
     deleteBookmark,
     findAndUpdate,
-    findById
+    findById,
+    error: false
   };
 
 }());
