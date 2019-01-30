@@ -6,7 +6,7 @@ const store = (function(){
   };
     
   const deleteBookmark = function(id){
-    this.items.filter(item => item.id !== id);
+    this.items = this.items.filter(item => item.id !== id);
   };
 
   const findAndUpdate = function(id, newData) {

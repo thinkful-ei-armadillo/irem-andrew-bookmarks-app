@@ -32,10 +32,16 @@ const api = (function(){
     });
   };
 
+  const deleteBookmark = function(id){
+    return listApiFetch(BASE_URL+'/'+id, {
+      method: 'DELETE',
+    });
+  };
+
   return {
     createBookmark,
-    getBookmarks
-
+    getBookmarks,
+    deleteBookmark
   };
 
 }());
