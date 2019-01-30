@@ -1,15 +1,6 @@
 /* global api, $, store, cuid */
 'use strict';
 
-// $.fn.extend({
-//   serializeJson: function() {
-//     const formData = new FormData(this[0]);
-//     const o = {};
-//     formData.forEach((val, name) => o[name] = val);
-//     return JSON.stringify(o);
-//   }
-// });
-
 $.fn.extend({
   getFormInput: function() {
     const formData = new FormData(this[0]);
@@ -18,6 +9,25 @@ $.fn.extend({
     return o;
   }
 });
+
+function render(){
+  let items = [...store.items];
+  // Iterate over each items element and check to see if extended is true
+  // If it is true, generateExtendedHTML for that element 
+  // If false, generateBookmarkHTML for that element
+  // All while keeping the original order of the array
+  let newBookmarkString = '';
+  for (let i = 0; i < items.length; i++){
+    if (items[i].extended){
+      newBookmarkString += generateExtendedBookmarkHTML(items[i]);
+    }
+    else {
+      newBookmarkString += generateBookmarkHTML(items[i]);
+    }
+  }
+  // const bookmarkItemString = generateBookmarksHTMLString(items);
+    $('.js-bookmark-list').html(newBookmarkString);
+}
 
 function handleAddBookMarkButton(){
   $('.js-add-bookmark').on('click', function(e){
@@ -33,13 +43,19 @@ function handleNewBookmarkSubmit(){
   $('form').on('submit', function(e){
     e.preventDefault();
     const userInput = $(e.target).getFormInput();
-    userInput.id = cuid();
-    userInput.extended = false; 
+    addIdAndExtendedFeature(userInput); 
     const userJSONInput = JSON.stringify(userInput);
-    // api.createBookmark(userJSONInput);
-    store.addBookmark(userInput);
-    render();
+    api.createBookmark(userJSONInput)
+     .then(() => {
+      store.addBookmark(userInput);
+      render();
+     });
   });
+}
+
+function addIdAndExtendedFeature(item){
+  item.id = cuid();
+  item.extended = false;
 }
 
 function handleExtendViewClick(){
@@ -50,7 +66,6 @@ function handleExtendViewClick(){
     store.findAndUpdate(id, {extended: !userItem.extended});
     console.log(userItem);
     render();
-    // generateExtendedBookmarkHTML();
   });
 }
 
@@ -58,31 +73,6 @@ function findIdFromElement(item){
   return $(item)
     .closest('.js-bookmark-view')
     .data('id');
-}
-
-function render(){
-  
-  let items = [...store.items];
-  // Iterate over each items element and check to see if extended is true
-  // If it is true, generateExtendedHTML for that element 
-  // If false, generateBookmarkHTML for that element
-  // All while keeping the original order of the array
-  const newItems = [];
-  for(let i = 0; i < items.length; i++){
-    if (items[i].extended){
-      generateExtendedBookmarkHTML(items[i]);
-    }
-    else {
-     newItems.push(items[i]);
-    }
-  }
-  console.log(newItems);
-  const bookmarkItemString = generateBookmarksHTMLString(newItems);
-    $('.js-bookmark-list').html(bookmarkItemString);
-
-
-  // console.log(bookmarkItemString);
- 
 }
 
 function generateBookmarkHTML(item){
@@ -118,12 +108,6 @@ function handleMinimumRatingDropdown(){
     console.log('handleMinimumRatingDropdown ran');
   });
 }
-
-// function render(){
-//   if(store.addBookMark === true){
-//     displayAddBookMarkHtml();
-//   }
-// }
 
 function watchForm() {
   handleAddBookMarkButton();
