@@ -49,17 +49,17 @@ function handleNewBookmarkSubmit(){
 function handleExtendViewClick(){
   $('ul').on('dblclick', '.js-bookmark-view', function(e){
     e.preventDefault();
-    console.log(e.currentTarget);
+    // console.log(e.currentTarget);
     const id = findIdFromElement(e.currentTarget);
     console.log(id);
-    generateExtendedBookmarkHTML();
+    const item = store.items.filter(item=> item.id == id);
+    console.log(item);
+    generateExtendedBookmarkHTML(item);
   });
 }
 
 function findIdFromElement(item){
-  return $(item)
-    .closest('.js-bookmark-view')
-    .data('data-id');
+  return $(item).data('id');
 }
 
 function render(){
@@ -80,15 +80,14 @@ function generateBookmarkHTML(item){
 }
 
 function generateExtendedBookmarkHTML(item){
-  return `
-    <li data-id="${item.id}" class="js-bookmark-view">
-      <p>${item.title}</p>
-      <p>${item.rating}</p>
-      <p>${item.url}</p>
-      <p>${item.description}</p>
+  return $('.js-bookmark-view').html(
+    `<li data-id="${item.id}" class="js-bookmark-view">
+      <p>${item[0].title}</p>
+      <p>${item[0].rating}</p>
+      <p>${item[0].url}</p>
+      <p>${item[0].description}</p>
         <button type="submit" class="js-remove-bookmark">Remove</button>
-    </li>
-  `;
+    </li>`);
 }
 
 function generateBookmarksHTMLString(bookmarks){
