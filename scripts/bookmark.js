@@ -91,7 +91,7 @@ const bookmarkList = (function() {
   }
 
   function handleNewBookmarkSubmit(){
-    $('form').on('submit', function(e){
+    $('.js-bookmark-list').on('submit', function(e){
       e.preventDefault();
       const userInput = $(e.target).getFormInput();
       addIdAndExtendedFeature(userInput); 
