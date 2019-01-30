@@ -32,15 +32,11 @@ function handleAddBookMarkButton(){
 function handleNewBookmarkSubmit(){
   $('form').on('submit', function(e){
     e.preventDefault();
-    // console.log($(e.target).val());
-    // console.log('handleNewBookmarkSubmit ran');
     const userInput = $(e.target).getFormInput();
     userInput.id = cuid();
     userInput.extended = false; 
-    // console.log(userInput);
     const userJSONInput = JSON.stringify(userInput);
-    // console.log(userJSONInput);
-    api.createBookmark(userJSONInput);
+    // api.createBookmark(userJSONInput);
     store.addBookmark(userInput);
     render();
   });
@@ -49,24 +45,44 @@ function handleNewBookmarkSubmit(){
 function handleExtendViewClick(){
   $('ul').on('dblclick', '.js-bookmark-view', function(e){
     e.preventDefault();
-    console.log(e.currentTarget);
     const id = findIdFromElement(e.currentTarget);
-    console.log(id);
-    generateExtendedBookmarkHTML();
+    const userItem = store.findById(id);
+    store.findAndUpdate(id, {extended: !userItem.extended});
+    console.log(userItem);
+    render();
+    // generateExtendedBookmarkHTML();
   });
 }
 
 function findIdFromElement(item){
   return $(item)
     .closest('.js-bookmark-view')
-    .data('data-id');
+    .data('id');
 }
 
 function render(){
+  
   let items = [...store.items];
-  const bookmarkItemString = generateBookmarksHTMLString(items);
+  // Iterate over each items element and check to see if extended is true
+  // If it is true, generateExtendedHTML for that element 
+  // If false, generateBookmarkHTML for that element
+  // All while keeping the original order of the array
+  const newItems = [];
+  for(let i = 0; i < items.length; i++){
+    if (items[i].extended){
+      generateExtendedBookmarkHTML(items[i]);
+    }
+    else {
+     newItems.push(items[i]);
+    }
+  }
+  console.log(newItems);
+  const bookmarkItemString = generateBookmarksHTMLString(newItems);
+    $('.js-bookmark-list').html(bookmarkItemString);
+
+
   // console.log(bookmarkItemString);
-  $('.js-bookmark-list').html(bookmarkItemString);
+ 
 }
 
 function generateBookmarkHTML(item){
