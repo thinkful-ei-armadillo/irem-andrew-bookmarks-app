@@ -23,6 +23,13 @@ const bookmarkList = (function() {
       newBookmarkString += generateAddBookmarkFormHTML();
     }
 
+    if(store.minimumRating !== 1) {
+      for (let i = 0; i < store.filteredItems.length; i++){
+        newBookmarkString += generateBookmarkHTML(store.filteredItems[i]);
+      }
+      // console.log(newBookmarkString);
+    }
+
     for (let i = 0; i < items.length; i++){
       if (items[i].extended){
         newBookmarkString += generateExtendedBookmarkHTML(items[i]);
@@ -159,7 +166,15 @@ const bookmarkList = (function() {
     $('.js-minimum-rating').change(function(e){
       e.preventDefault(); 
       console.log('handleMinimumRatingDropdown ran');
+      let minimumRating = $(e.currentTarget).val();
+      filterBookmarkList(minimumRating);
+      store.minimumRating = minimumRating;
+      render();
     });
+  }
+
+  function filterBookmarkList(minimumRating){
+    store.filteredItems = store.items.filter(item => item.rating >= minimumRating);
   }
 
   function watchForm() {

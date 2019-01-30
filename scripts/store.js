@@ -23,6 +23,8 @@ const store = (function(){
   return {
     items: [],
     adding: false,
+    minimumRating: 1,
+    filteredItems: [],
     addBookmark,
     deleteBookmark,
     findAndUpdate,
