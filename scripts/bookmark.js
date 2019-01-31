@@ -107,8 +107,8 @@ const bookmarkList = (function() {
   function handleErrorMessage(error){
     $('.error-container').html(`
     <section class="error-content">
-      <button id="cancel-error">Close</button>
       <p>${error}</p>
+      <button id="cancel-error">Close</button>
     </section>
   `);
   }

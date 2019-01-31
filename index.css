@@ -11,18 +11,33 @@ text-align: center;
 font-family: 'Libre Baskerville', serif;
 }
 
+button {
+    background-color: white;
+}
 h1{
     border: 0.125em solid royalblue;   
     display: inline-block;
-    padding: 1.250em;
-    
+    font-size: 2em;
+    /* padding: 1.250em; */
 }
 
-.js-add-bookmark{
+.js-add-bookmark  {
     border: 0.125em solid royalblue;
     font-size: 1.125em;
     /* padding: 15px 25px; */
     /* font-size: 18px; */
+    font-family: 'Libre Baskerville', serif;
+}
+
+.js-add-bookmark-button, .js-close-add-bookmark-button {
+    border: 0.07em solid royalblue;
+    font-size: 0.7em;s
+    font-family: 'Libre Baskerville', serif;
+}
+
+#cancel-error{
+    border: 0.05em solid red;
+    font-size: 0.7em;
     font-family: 'Libre Baskerville', serif;
 }
 
@@ -39,6 +54,7 @@ h1{
     margin-top: 0.625em;
     font-family: 'Libre Baskerville', serif;
     font-size: 1.125em;
+    background-color: white;
 }
 
 .item-title{
@@ -71,10 +87,45 @@ ul {
     margin-top: 3em
 }
 
+#item-title, #item-url, #item-rating, #item-description {
+    font-family: 'Libre Baskerville', serif;
+}
 
-@media screen and (max-width:448px){
-    
-    .container {
-        width: 100%,
+form {
+    font-size: 2em;
+    display:inline-block;
+    border: 0.1em solid royalblue;
+    font-family: 'Libre Baskerville', serif;
+    padding: 0.313em 0.500em 0.313em 0.500em;
+}
+
+.error-content {
+    border: 0.1em solid red;
+    font-size: 1em;
+    display:inline-block;
+    font-family: 'Libre Baskerville', serif;
+    padding: 0.313em 0.500em 0.313em 0.500em;
+    margin: 0.5em;
+}
+
+
+
+@media screen and (max-width:320px){
+    body {
+        margin: 0px;
+        width: 100%;
+    }
+    h1 {
+        font-size: 2em;
+    }
+}
+
+@media screen and (min-width:320px) and (max-width: 570){
+    body {
+        margin: 0px;
+        width: 100%;
+    }
+    h1 {
+        font-size: 2em;
     }
 }
