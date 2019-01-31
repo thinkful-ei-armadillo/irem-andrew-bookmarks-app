@@ -181,8 +181,8 @@ const bookmarkList = (function() {
   function generateBookmarkHTML(item){
     return `
     <li data-id="${item.id}" class="js-bookmark-view">
-      <p>${item.title}</p>
-      <p>${item.rating}</p>
+      <p class="js-item-title">${item.title}</p>
+      <p class="js-item-rating">${item.rating}</p>
         <button type="submit" class="js-remove-bookmark">Remove</button>
     </li>
   `;
@@ -191,8 +191,8 @@ const bookmarkList = (function() {
   function generateExtendedBookmarkHTML(item){
     return `
     <li data-id="${item.id}" class="js-bookmark-view">
-      <p>${item.title}</p>
-      <p>${item.rating}</p>
+      <p class="js-item-title">${item.title}</p>
+      <p class="js-item-rating">${item.rating}</p>
       <a href="${item.url}">Visit site</a>
       <p>${item.desc}</p>
         <button type="submit" class="js-remove-bookmark">Remove</button>
