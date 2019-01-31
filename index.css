@@ -3,32 +3,78 @@
 }
 
 body {
-border: 1em solid darkblue;
-margin-left: 4em;
-margin-right: 4em;
+border: .313em solid royalblue;
+width: 50%;
+margin-left: auto;
+margin-right: auto;
 text-align: center;
+font-family: 'Libre Baskerville', serif;
 }
 
 h1{
-    border: 0.2em solid darkblue;   
-}
-button, select{
-    border-color: darkblue;
-    border-style: solid;
-    border-width: 0.1em;
-    padding: 1px 7px 2px;
+    border: 0.125em solid royalblue;   
+    display: inline-block;
+    padding: 1.250em;
+    
 }
 
-ul li{
-border: 0.2em solid;
-border-color: lightskyblue;
-list-style: none;
-border-width: 0.1em;
+.js-add-bookmark{
+    border: 0.125em solid royalblue;
+    font-size: 1.125em;
+    /* padding: 15px 25px; */
+    /* font-size: 18px; */
+    font-family: 'Libre Baskerville', serif;
 }
-.js-minimum-rating .js-add-bookmark {
-width: 5%;
+
+.js-remove-bookmark{
+   border: 0.125em solid royalblue;
+   font-size: 0.938em;
+   padding: 10px;
+   font-family: 'Libre Baskerville', serif;
+
 }
-@media screen and (max-width:320px)
-{
-width: 100%,
+
+.js-minimum-rating{
+    border: 0.125em solid royalblue;
+    margin-top: 0.625em;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.125em;
+}
+
+.item-title{
+    text-align: center;
+}
+
+.item-rating{
+    border: 0.125em solid royalblue;
+    display: inline-block;
+    padding: 0.5em;
+}
+
+.js-bookmark-view{
+    margin: 0;
+    padding: 0.625em 0.938em;
+    font-size: 1.125em;
+    margin: 0.625em 0px 0.625em;
+}
+
+li {
+    list-style: none;
+    text-align: left;
+    border: 0.125em solid royalblue;
+    padding: 0.313em 0.500em 0.313em 0.500em;
+    margin-right: 0.625em;
+}
+
+ul {
+    padding: 1em;
+    margin-top: 3em
+}
+
+
+@media screen and (max-width:448px){
+    
+    .container {
+        width: 100%,
+    }
 }
