@@ -31,7 +31,7 @@ h1{
 
 .js-add-bookmark-button, .js-close-add-bookmark-button {
     border: 0.07em solid royalblue;
-    font-size: 0.7em;s
+    font-size: 0.7em;
     font-family: 'Libre Baskerville', serif;
 }
 
@@ -108,24 +108,13 @@ form {
     margin: 0.5em;
 }
 
-
-
-@media screen and (max-width:320px){
+@media screen and (max-width: 570px){
     body {
         margin: 0px;
         width: 100%;
     }
     h1 {
         font-size: 2em;
-    }
-}
-
-@media screen and (min-width:320px) and (max-width: 570){
-    body {
-        margin: 0px;
-        width: 100%;
-    }
-    h1 {
-        font-size: 2em;
+        display: block;
     }
 }
