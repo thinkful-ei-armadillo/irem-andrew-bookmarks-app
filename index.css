@@ -116,5 +116,7 @@ form {
     h1 {
         font-size: 2em;
         display: block;
+        margin-right: 0.3em;
+        margin-left: 0.3em;
     }
 }
