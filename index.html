@@ -10,12 +10,10 @@
 </head>
 <body>
     <div class="container">
-    <header>
+    <header role="banner">
         <h1>My Bookmarks</h1>
     </header>
-    <main>
-        <div class="error-container">
-        </div>
+    <main role="main">
         <div class="rating-title">
             <button type="button" class="js-add-bookmark">Add Bookmark</button>
             <select name="rating" class="js-minimum-rating">
@@ -26,17 +24,15 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
-            </div>
-            
-            <section>
-                <ul class="js-bookmark-list">
-                    <li>
-                    </li>
-                </ul>
-            </section>
-        <div>
         </div>
-        
+        <div class="error-container">
+        </div>
+        <section>
+            <ul class="js-bookmark-list">
+                <li>
+                </li>
+            </ul>
+        </section>
     </main>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cuid/1.3.8/browser-cuid.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
